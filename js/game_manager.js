@@ -4,7 +4,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
 
-  this.startTiles     = 2;
+  this.startTiles     = 15;
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -28,11 +28,7 @@ GameManager.prototype.keepPlaying = function () {
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
-  if (this.over || (this.won && !this.keepPlaying)) {
-    return true;
-  } else {
-    return false;
-  }
+  return this.over || (this.won && !this.keepPlaying);
 };
 
 // Set up the game
@@ -72,7 +68,13 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    var value;
+    var probability = Math.random();
+    if (probability < 0.99) {
+      value = (probability < 0.9) ? 128 : 1024;
+    } else {
+      value = 1;
+    }
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
