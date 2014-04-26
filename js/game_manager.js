@@ -63,7 +63,7 @@ GameManager.prototype.addStartTiles = function () {
   //for (var i = 0; i < this.startTiles; i++) {
   //  this.addRandomTile();
   //}
-  var tile = new Tile(this.grid.randomAvailableCell(), 1);
+  var tile = new Tile(this.grid.randomAvailableCell(), 0);
   this.grid.insertTile(tile);
 };
 
@@ -74,7 +74,7 @@ GameManager.prototype.addRandomTile = function () {
     var probability = Math.random();
     if (probability < 0.85) { value = 2; }
     else if (probability < 0.95) { value = 4; }
-    else { value = 1 }
+    else { value = 0 }
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
